@@ -2,3 +2,11 @@ node_modules/
 frontend/node_modules/
 .env
 .DS_Store
+
+# environment variables.env
+p2env/
+
+# Python cache files
+backend/services/__pycache__/
+backend/__pycache__/
+backend/routers/__pycache__/
