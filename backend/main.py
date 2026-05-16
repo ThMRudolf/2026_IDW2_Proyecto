@@ -1,3 +1,31 @@
+"""
+Application entry point for the FIFA 2026 API.
+
+Objective:
+    Bootstrap the FastAPI application: create all database tables, configure
+    CORS so the React frontend can reach the API, and register every router
+    under its declared prefix.
+
+Environment variables:
+    ALLOWED_ORIGINS (str, default "http://localhost:5173") -- Comma-separated
+        list of origins that the browser is permitted to call. Set to the
+        production frontend URL(s) before deploying.
+
+Registered routers and prefixes:
+    /health            -- Liveness / readiness probe.
+    /api/users         -- User registration and lookup.
+    /api/stories       -- Fan-authored story CRUD.
+    /api/standings     -- Tournament group-stage standings.
+    /api/venues        -- Stadium information.
+    /api/countries     -- Host-country information.
+    /api/instagram     -- Instagram-style post feed.
+    /api/external      -- Proxied data from API-Football v3.
+
+Notes:
+    Tables are created via Base.metadata.create_all on every startup.
+    For production use Alembic migrations instead.
+"""
+
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
