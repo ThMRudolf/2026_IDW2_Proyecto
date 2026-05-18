@@ -1,27 +1,69 @@
+import { useEffect, useState } from "react";
+import StoryCard from "./components/StoryCard";
+import StoryForm from "./components/StoryForm";
+import {
+  getStories,
+  createStory,
+  updateStory,
+  deleteStory,
+} from "./api/StoryApi";
+
 function App() {
-  const stories = [
-    {
-      id: 1,
-      title: "La Copa Mundial 2026 comienza a tomar forma",
-      section: "Historias destacadas",
-      body: "Las selecciones, ciudades y aficionados se preparan para una edición histórica del torneo.",
-      imageUrl: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d",
-    },
-    {
-      id: 2,
-      title: "Las ciudades anfitrionas se preparan para recibir al mundo",
-      section: "Ciudades anfitrionas",
-      body: "México, Estados Unidos y Canadá compartirán la organización de la Copa Mundial.",
-      imageUrl: "https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a",
-    },
-    {
-      id: 3,
-      title: "El escenario de la Copa Mundial está listo",
-      section: "Mundial 2026",
-      body: "Los estadios y sedes se alistan para recibir a millones de aficionados.",
-      imageUrl: "https://images.unsplash.com/photo-1486286701208-1d58e9338013",
-    },
-  ];
+  const [stories, setStories] = useState([]);
+  const [selectedStory, setSelectedStory] = useState(null);
+  const [currentUser, setCurrentUser] = useState(
+    sessionStorage.getItem("currentUser") || "demo"
+  );
+
+  useEffect(() => {
+    loadStories();
+  }, []);
+
+  async function loadStories() {
+    try {
+      const data = await getStories();
+      setStories(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  function handleUserChange(event) {
+    setCurrentUser(event.target.value);
+    sessionStorage.setItem("currentUser", event.target.value);
+  }
+
+  async function handleSubmitStory(storyData) {
+    try {
+      if (selectedStory) {
+        await updateStory(selectedStory.id, storyData, currentUser);
+        setSelectedStory(null);
+      } else {
+        await createStory(storyData, currentUser);
+      }
+
+      await loadStories();
+    } catch (error) {
+      console.error(error);
+      alert("No se pudo guardar la historia.");
+    }
+  }
+
+  async function handleDeleteStory(id) {
+    const confirmDelete = window.confirm(
+      "¿Seguro que quieres eliminar esta historia?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      await deleteStory(id, currentUser);
+      await loadStories();
+    } catch (error) {
+      console.error(error);
+      alert("No se pudo eliminar la historia. Revisa que seas el usuario que la creó.");
+    }
+  }
 
   const hostCities = [
     {
@@ -120,6 +162,11 @@ function App() {
                 </a>
               </li>
               <li className="nav-item">
+                <a className="nav-link" href="#administrar-historias">
+                  Administrar
+                </a>
+              </li>
+              <li className="nav-item">
                 <a className="nav-link" href="#clasificacion">
                   Clasificación
                 </a>
@@ -150,6 +197,7 @@ function App() {
                   Explora historias, ciudades anfitrionas, clasificación y
                   contenido destacado rumbo al torneo más esperado del mundo.
                 </p>
+
                 <div className="d-flex gap-3 flex-wrap">
                   <a href="#historias" className="btn btn-primary custom-btn">
                     Ver historias
@@ -175,38 +223,46 @@ function App() {
           <div className="section-header">
             <p className="section-label">Noticias</p>
             <h2>Historias destacadas</h2>
-            <p>
-              Explora las noticias principales rumbo a la Copa Mundial 2026.
-            </p>
+            <p>Explora las noticias principales rumbo a la Copa Mundial 2026.</p>
           </div>
 
           <div className="row g-4">
             {stories.map((story) => (
-              <div className="col-12 col-md-4" key={story.id}>
-                <article className="card story-card h-100">
-                  <img
-                    src={story.imageUrl}
-                    className="card-img-top"
-                    alt={story.title}
-                  />
-
-                  <div className="card-body">
-                    <span className="badge text-bg-success mb-2">
-                      {story.section}
-                    </span>
-                    <h5 className="card-title">{story.title}</h5>
-                    <p className="card-text">{story.body}</p>
-                  </div>
-
-                  <div className="card-footer bg-white border-0">
-                    <button className="btn btn-outline-dark btn-sm">
-                      Leer más
-                    </button>
-                  </div>
-                </article>
-              </div>
+              <StoryCard
+                key={story.id}
+                story={story}
+                onEdit={setSelectedStory}
+                onDelete={handleDeleteStory}
+              />
             ))}
           </div>
+        </section>
+
+        <section className="container my-5" id="administrar-historias">
+          <div className="section-header">
+            <p className="section-label">Administración</p>
+            <h2>Administrar historias destacadas</h2>
+            <p>
+              Crea, edita o elimina historias usando el usuario actual guardado
+              en sessionStorage.
+            </p>
+          </div>
+
+          <div className="mb-4">
+            <label className="form-label">Usuario actual</label>
+            <input
+              type="text"
+              className="form-control"
+              value={currentUser}
+              onChange={handleUserChange}
+            />
+          </div>
+
+          <StoryForm
+            selectedStory={selectedStory}
+            onSubmit={handleSubmitStory}
+            onCancel={() => setSelectedStory(null)}
+          />
         </section>
 
         <section className="container my-5" id="clasificacion">

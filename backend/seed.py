@@ -1,68 +1,130 @@
-"""
-Database seed script for development and testing.
-
-Objective:
-    Populate the database with initial fixture data so the application
-    can be run and tested locally without manual data entry.
-    Run this script once after the database has been created:
-
-        python seed.py
-
-    Re-running is safe only if existing rows are cleared first; otherwise
-    unique-constraint violations will abort the insert.
-
-    NOTE: The ORM model definitions below mirror a subset of models.py.
-    They are kept here so the seed script can be executed standalone
-    without importing the full application stack.
-
-Inputs:
-    None. Reads DATABASE_URL from the environment (via database.py) to
-    determine which database to populate.
-
-Output:
-    Rows inserted into the stories and standings tables and committed to
-    the database. Prints a confirmation message on success.
-"""
-
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
-from database import Base
+from sqlalchemy.orm import Session
 
+from database import SessionLocal
+from models import Story, Standing
 
-class Story(Base):
-    """
-    Minimal Story model used by the seed script.
+db: Session = SessionLocal()
 
-    Mirrors the stories table definition in models.py.
-    See models.Story for the full column documentation.
-    """
-    __tablename__ = "stories"
+try:
+    # =========================
+    # HISTORIAS
+    # =========================
 
-    id         = Column(Integer, primary_key=True, index=True)
-    title      = Column(String(255), nullable=False)
-    section    = Column(String(100), nullable=False)
-    body       = Column(Text, nullable=False)
-    image_url  = Column(String(500), nullable=False)
-    user_id    = Column(String(36), nullable=False, index=True)  # UUID from header
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-    updated_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    existing_story = db.query(Story).first()
 
+    if not existing_story:
+        stories = [
+            Story(
+                title="México se prepara para inaugurar el Mundial 2026",
+                section="Historias destacadas",
+                body="La Ciudad de México se alista para recibir partidos históricos de la Copa Mundial 2026, con el Estadio Azteca como uno de los escenarios principales.",
+                image_url="https://images.unsplash.com/photo-1518696957610-1c28c5cf1d8f?auto=format&fit=crop&w=900&q=80",
+                user_id="admin",
+                created_at=datetime.utcnow(),
+                updated_at=datetime.utcnow(),
+            ),
 
-class Standing(Base):
-    """
-    Minimal Standing model used by the seed script.
+            Story(
+                title="Las ciudades anfitrionas se preparan para recibir al mundo",
+                section="Ciudades anfitrionas",
+                body="México, Estados Unidos y Canadá compartirán una edición histórica del torneo, con sedes listas para recibir a millones de aficionados.",
+                image_url="https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?auto=format&fit=crop&w=900&q=80",
+                user_id="admin",
+                created_at=datetime.utcnow(),
+                updated_at=datetime.utcnow(),
+            ),
 
-    Mirrors the standings table definition in models.py.
-    See models.Standing for the full column documentation.
-    """
-    __tablename__ = "standings"
+            Story(
+                title="El escenario de la Copa Mundial está listo",
+                section="Mundial 2026",
+                body="La edición 2026 reunirá a 48 selecciones y se celebrará en tres países anfitriones, marcando una nueva etapa para el futbol internacional.",
+                image_url="https://images.unsplash.com/photo-1486286701208-1d58e9338301?auto=format&fit=crop&w=900&q=80",
+                user_id="admin",
+                created_at=datetime.utcnow(),
+                updated_at=datetime.utcnow(),
+            ),
 
-    id         = Column(Integer, primary_key=True, index=True)
-    group_name = Column(String(10), nullable=False, index=True)  # "A", "B", etc.
-    team       = Column(String(100), nullable=False)
-    flag_url   = Column(String(500), nullable=False)
-    played     = Column(Integer, default=0)
-    wins       = Column(Integer, default=0)
-    draws      = Column(Integer, default=0)
-    losses     = Column(Integer, default=0)
-    points     = Column(Integer, default=0)
+            Story(
+                title="Estados Unidos tendrá múltiples sedes mundialistas",
+                section="Sedes",
+                body="Estados Unidos contará con varias ciudades anfitrionas y estadios de gran capacidad para albergar partidos clave del torneo.",
+                image_url="https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?auto=format&fit=crop&w=900&q=80",
+                user_id="admin",
+                created_at=datetime.utcnow(),
+                updated_at=datetime.utcnow(),
+            ),
+
+            Story(
+                title="Canadá se suma a una edición histórica",
+                section="Países anfitriones",
+                body="Canadá formará parte de una Copa Mundial compartida por primera vez entre tres países, fortaleciendo la presencia del futbol en Norteamérica.",
+                image_url="https://images.unsplash.com/photo-1517090504586-fde19ea6066f?auto=format&fit=crop&w=900&q=80",
+                user_id="admin",
+                created_at=datetime.utcnow(),
+                updated_at=datetime.utcnow(),
+            ),
+        ]
+
+        db.add_all(stories)
+        print("Historias agregadas correctamente.")
+
+    else:
+        print("Las historias ya existen. No se duplicó información.")
+
+    # =========================
+    # CLASIFICACIÓN
+    # =========================
+
+    existing_standing = db.query(Standing).first()
+
+    if not existing_standing:
+        standings = [
+            Standing(
+                group_name="A",
+                team="México",
+                flag_url="https://flagcdn.com/w320/mx.png",
+                played=3,
+                wins=3,
+                draws=0,
+                losses=0,
+                points=9,
+            ),
+
+            Standing(
+                group_name="A",
+                team="Canadá",
+                flag_url="https://flagcdn.com/w320/ca.png",
+                played=3,
+                wins=2,
+                draws=1,
+                losses=0,
+                points=7,
+            ),
+
+            Standing(
+                group_name="B",
+                team="Estados Unidos",
+                flag_url="https://flagcdn.com/w320/us.png",
+                played=3,
+                wins=2,
+                draws=0,
+                losses=1,
+                points=6,
+            ),
+        ]
+
+        db.add_all(standings)
+        print("Clasificación agregada correctamente.")
+
+    else:
+        print("La clasificación ya existe. No se duplicó.")
+
+    db.commit()
+
+except Exception as error:
+    db.rollback()
+    print("Error cargando datos:", error)
+
+finally:
+    db.close()
