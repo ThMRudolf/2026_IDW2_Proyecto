@@ -1,49 +1,38 @@
-"""
-Router for Instagram feed endpoints.
-
-Provides read-only access to curated Instagram posts stored in the database,
-with pagination support.
-All routes are prefixed with /api/instagram.
-"""
-
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from math import ceil
 
 from database import get_db
-from schemas import InstagramPostRead, PaginatedResponse
-from services import instagram_service
+from models import InstagramPost
 
 router = APIRouter(prefix="/api/instagram", tags=["instagram"])
 
 
-@router.get("/feed", response_model=PaginatedResponse[InstagramPostRead])
-def get_feed(
+@router.get("")
+def list_instagram_posts(
     page: int = 1,
-    limit: int = 12,
+    limit: int = 10,
     db: Session = Depends(get_db),
 ):
-    """
-    Retrieve a paginated list of Instagram posts for the in-app feed.
+    query = db.query(InstagramPost).order_by(InstagramPost.id.desc())
 
-    Objective:
-        Return curated Instagram posts in reverse-chronological order so the
-        frontend can render an image feed widget.
+    total = query.count()
+    items = query.offset((page - 1) * limit).limit(limit).all()
 
-    Inputs (query params):
-        page  (int, default=1)  -- 1-based page number to retrieve.
-        limit (int, default=12) -- Maximum number of posts per page.
-                                   Default matches a typical 3-column grid row count.
+    return {
+        "items": items,
+        "total": total,
+        "page": page,
+        "limit": limit,
+        "pages": ceil(total / limit) if total else 1,
+    }
 
-    Output (PaginatedResponse[InstagramPostRead]):
-        items (List[InstagramPostRead]) -- Posts on the requested page. Each entry contains:
-            id        (int)      -- Unique post identifier.
-            image_url (str)      -- URL of the post image.
-            caption   (str)      -- Post caption text.
-            link      (str)      -- URL to the original Instagram post.
-            posted_at (datetime) -- Publication timestamp (UTC).
-        total (int) -- Total number of posts in the database.
-        page  (int) -- Current page number.
-        limit (int) -- Page size used for this response.
-        pages (int) -- Total number of available pages.
-    """
-    return instagram_service.get_feed(db, page, limit)
+
+@router.get("/{post_id}")
+def get_instagram_post(post_id: int, db: Session = Depends(get_db)):
+    post = db.query(InstagramPost).filter(InstagramPost.id == post_id).first()
+
+    if not post:
+        raise HTTPException(status_code=404, detail="Instagram post not found")
+
+    return post
