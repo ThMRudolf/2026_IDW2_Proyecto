@@ -102,5 +102,5 @@ Actualmente el proyecto cuenta con la estructura base del frontend y backend, co
 
 ## Links
 - Frontend: https://...
-- API Health: https://api.tu-dominio.com/health
-- Live demo: [link a presentación / video]
+- API Health:
+- Live demo: 19.05.2026, 9:30 via Teams
