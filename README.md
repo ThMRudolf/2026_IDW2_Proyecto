@@ -52,7 +52,7 @@ Configurar CORS para permitir que el frontend se comunique con el backend.
 Registrar los routers principales de la API.
 
 ## Levantar el backend
-# Windows:
+*Windows:*
 p2env\Scripts\activate 
 # Linux / Mac
 # source p2env/bin/activate 
