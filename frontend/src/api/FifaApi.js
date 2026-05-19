@@ -33,9 +33,10 @@ export async function getInstagramPosts() {
 // <option value={135}>Serie A</option>
 // <option value={78}>Bundesliga</option>
 // <option value={61}>Ligue 1</option>
-export async function getTopScorers() {
+export async function getTopScorers(league = 78, season = 2023) {
+  //console.log("Fetching:", league, season);
   try {
-    return await getItems("/api/external/topscorers?league=39&season=2023");
+    return await getItems(`/api/external/topscorers?league=${league}&season=${season}`);
   } catch {
     return [];
   }

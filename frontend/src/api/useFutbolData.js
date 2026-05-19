@@ -10,7 +10,7 @@ async function fetchEndpoint(endpoint) {
   return data.items || data;
 }
 
-export function useTopScorers(league = 1, season = 2026) {
+export function useTopScorers(league = 26, season = 2024) {
   const [scorers, setScorers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
