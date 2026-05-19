@@ -7,7 +7,12 @@ OpenAPI schema.
 
 from fastapi import APIRouter, Query
 from services import external_api_service
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+
+API_FOOTBALL_KEY = os.getenv("API_FOOTBALL_KEY", "")
 router = APIRouter(prefix="/api/external", tags=["external"])
 
 
