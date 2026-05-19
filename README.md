@@ -57,7 +57,7 @@ El archivo principal del backend es main.py. Este archivo se encarga de:
 
 *Linux / Mac:* source p2env/bin/activate 
 
-or if not exist yet p2env:
+en caso que el ambiente *p2env* no existe, hay que correr los siguienets comandos:
 
 - python -m venv 2penv
 - pip install -r requirements.txt
