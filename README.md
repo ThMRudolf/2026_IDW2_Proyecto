@@ -57,9 +57,10 @@ Registrar los routers principales de la API.
 
 *Linux / Mac:* source p2env/bin/activate 
 
-or if not exist yet p2env
-python -m venv 2penv
-pip install -r requirements.txt
+or if not exist yet p2env:
+
+- python -m venv 2penv
+- pip install -r requirements.txt
 
 p2env\Scripts\activate  or  source p2env/bin/activate 
 
