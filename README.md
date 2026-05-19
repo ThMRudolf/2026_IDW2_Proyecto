@@ -16,26 +16,26 @@ npm install
 npm run dev
 
 ## Tecnologías usadas
-# Frontend 
--React 
--Vite
--Bootstrap
--JavaScript
--HTML
--CSS
+### Frontend 
+- React 
+- Vite
+- Bootstrap
+- JavaScript
+- HTML
+- CSS
 
-## Backend 
--Pyhton 
--FastAPI
--SQLAlchemy
--UVicorn
--Base de datos relacional
--CORS Middleware
+### Backend 
+- Pyhton 
+- FastAPI
+- SQLAlchemy
+- UVicorn
+- Base de datos relacional
+- CORS Middleware
 
 ## Herramientas adicionales 
--Github y Git
--API-Football v3 
--Variables de entorno mediante archivo .env
+- Github y Git
+- API-Football v3 
+- Variables de entorno mediante archivo .env
 
 ## Descripción del fronend 
 El frontend es la parte visual de la aplicación. Está construido con React y configurado con Vite, lo cual permite levantar un servidor de desarrollo rápido.
@@ -46,10 +46,10 @@ React se monta sobre el elemento con id root, y desde ahí se renderizan los com
 ## Descripción del backend
 El backend está desarrollado con FastAPI. Su función principal es exponer una API REST para que el frontend pueda consultar, crear y administrar información del proyecto.
 El archivo principal del backend es main.py. Este archivo se encarga de:
-Crear la aplicación de FastAPI.
-Crear las tablas de la base de datos al iniciar el servidor.
-Configurar CORS para permitir que el frontend se comunique con el backend.
-Registrar los routers principales de la API.
+- Crear la aplicación de FastAPI.
+- Crear las tablas de la base de datos al iniciar el servidor.
+- Configurar CORS para permitir que el frontend se comunique con el backend.
+- Registrar los routers principales de la API.
 
 ## Levantar el backend
 
@@ -67,12 +67,10 @@ or if not exist yet p2env:
 - uvicorn main:app --reload
 
 ## Variables de entorno
-Para configurar el proyecto se debe copiar el archivo .env.example y renombrarlo como .env:
-cp .env.example .env
+Para configurar el proyecto se debe crear el archivo .env y definir el API-KEY de API-Football v3 entre otros: .env
 Después, completar los valores necesarios.
 Ejemplo de variables de entorno:
 ALLOWED_ORIGINS=http://localhost:5173
-DATABASE_URL=sqlite:///./fifa2026.db
 API_FOOTBALL_KEY=tu_api_key
 
 Variable ALLOWED_ORIGINS
