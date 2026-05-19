@@ -61,12 +61,10 @@ or if not exist yet p2env:
 
 - python -m venv 2penv
 - pip install -r requirements.txt
-
-p2env\Scripts\activate  or  source p2env/bin/activate 
-
-cd backend
-python seed.py                 # solo primera vez
-uvicorn main:app --reload
+- p2env\Scripts\activate  or  source p2env/bin/activate
+- cd backend
+- python seed.py (solo primera vez)
+- uvicorn main:app --reload
 
 ## Variables de entorno
 Para configurar el proyecto se debe copiar el archivo .env.example y renombrarlo como .env:
