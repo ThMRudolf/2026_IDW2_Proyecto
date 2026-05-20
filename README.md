@@ -52,16 +52,13 @@ El archivo principal del backend es main.py. Este archivo se encarga de:
 - Registrar los routers principales de la API.
 
 ## Levantar el backend
-# Windows:
-p2env\Scripts\activate 
-# Linux / Mac
-# source p2env/bin/activate 
+*Windows:* p2env\Scripts\activate 
+*Linux / Mac:* source p2env/bin/activate 
 
-
-# or if not exist yet p2env
-# python -m venv 2penv
-# pip install -r requirements.txt
-# p2env\Scripts\activate  or  source p2env/bin/activate 
+Si no existe p2env, se puede crear
+cd  backend && python -m venv 2penv
+pip install -r requirements.txt
+p2env\Scripts\activate  or  source p2env/bin/activate 
 
 cd backend
 python seed.py                 # solo primera vez
@@ -100,6 +97,6 @@ npm run preview	--> Previsualiza la versión de producción.
 Actualmente el proyecto cuenta con la estructura base del frontend y backend, configuración de Vite, configuración principal de FastAPI, routers separados por funcionalidad y preparación para conexión con datos internos y externos.
 
 ## Links
-- Frontend: https://...
+- Frontend: https://fifa-2026-frontend.onrender.com/
 - API Health:
 - Live demo: 19.05.2026, 9:30 via Teams
