@@ -1,4 +1,4 @@
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
 async function getItems(endpoint) {
   const response = await fetch(`${BASE_URL}${endpoint}`);
@@ -27,9 +27,9 @@ export async function getInstagramPosts() {
   return getItems("/api/instagram");
 }
 
-export async function getTopScorers() {
+export async function getTopScorers(league = 782, season = 2024) {
   try {
-    return await getItems("/api/external/topscorers");
+    return await getItems(`/api/external/topscorers?league=${league}&season=${season}`);
   } catch {
     return [];
   }

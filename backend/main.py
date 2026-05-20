@@ -30,6 +30,7 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+
 from database import engine, Base
 from routers import stories, standings, venues, countries, instagram, external_api, users, health
 
@@ -42,6 +43,13 @@ app = FastAPI(
     version="1.0.0",
 )
 
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # puerto de Vite
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # CORS — allow the React frontend to call this API
 origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
 
