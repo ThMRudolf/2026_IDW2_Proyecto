@@ -1,4 +1,4 @@
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
 async function getItems(endpoint) {
   const response = await fetch(`${BASE_URL}${endpoint}`);
@@ -27,14 +27,7 @@ export async function getInstagramPosts() {
   return getItems("/api/instagram");
 }
 
-// <option value={262}>Liga MX</option>
-// <option value={39}>Premier League</option>
-// <option value={140}>La Liga</option>
-// <option value={135}>Serie A</option>
-// <option value={78}>Bundesliga</option>
-// <option value={61}>Ligue 1</option>
-export async function getTopScorers(league = 78, season = 2023) {
-  //console.log("Fetching:", league, season);
+export async function getTopScorers(league = 782, season = 2024) {
   try {
     return await getItems(`/api/external/topscorers?league=${league}&season=${season}`);
   } catch {
