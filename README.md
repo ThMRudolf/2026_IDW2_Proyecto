@@ -52,19 +52,20 @@ El archivo principal del backend es main.py. Este archivo se encarga de:
 - Registrar los routers principales de la API.
 
 ## Levantar el backend
+# Windows:
+p2env\Scripts\activate 
+# Linux / Mac
+# source p2env/bin/activate 
 
-*Windows:* p2env\Scripts\activate
 
-*Linux / Mac:* source p2env/bin/activate 
+# or if not exist yet p2env
+# python -m venv 2penv
+# pip install -r requirements.txt
+# p2env\Scripts\activate  or  source p2env/bin/activate 
 
-en caso que el ambiente *p2env* no existe, hay que correr los siguienets comandos:
-
-- python -m venv 2penv
-- pip install -r requirements.txt
-- p2env\Scripts\activate  or  source p2env/bin/activate
-- cd backend
-- python seed.py (solo primera vez)
-- uvicorn main:app --reload
+cd backend
+python seed.py                 # solo primera vez
+uvicorn main:app --reload
 
 ## Variables de entorno
 Para configurar el proyecto se debe crear el archivo .env y definir el API-KEY de API-Football v3 entre otros: .env

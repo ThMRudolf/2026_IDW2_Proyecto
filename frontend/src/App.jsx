@@ -237,4 +237,20 @@ function App() {
   );
 }
 
+
+// -- temporalmente exportamos el componente para pruebas unitarias, pero en producción no lo haríamos así
+async function loadPageData() {
+  try { setStandings(await getStandings()); } catch (e) { console.error(e); }
+  try { setVenues(await getVenues()); } catch (e) { console.error(e); }
+  try { setCountries(await getCountries()); } catch (e) { console.error(e); }
+  try { setInstagramPosts(await getInstagramPosts()); } catch (e) { console.error(e); }
+  try {
+    const topScorers = await getTopScorers();
+    console.log("TOP SCORERS:", topScorers); // 👈 agrega esto
+    setPlayers(topScorers);
+  } catch (e) {
+    console.error("ERROR top scorers:", e); // 👈 y esto
+  }
+}
+// --
 export default App;
