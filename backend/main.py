@@ -44,12 +44,12 @@ app = FastAPI(
 )
 
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # puerto de Vite
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+#app.add_middleware(
+#    CORSMiddleware,
+#    allow_origins=["http://localhost:5173"],  # puerto de Vite
+#    allow_methods=["*"],
+#    allow_headers=["*"],
+#)
 # CORS — allow the React frontend to call this API
 origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
 
