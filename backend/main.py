@@ -51,7 +51,7 @@ app = FastAPI(
 #    allow_headers=["*"],
 #)
 # CORS — allow the React frontend to call this API
-origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
+origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173, https://fifa-2026-frontend.onrender.com").split(",")
 
 app.add_middleware(
     CORSMiddleware,
