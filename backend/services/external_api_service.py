@@ -7,13 +7,12 @@ API changes.  Requires the API_FOOTBALL_KEY environment variable.
 """
 
 import os
-
 import httpx
 from fastapi import HTTPException
 from dotenv import load_dotenv
-import os
 
 load_dotenv()
+
 API_FOOTBALL_KEY = os.getenv("API_FOOTBALL_KEY", "")
 API_FOOTBALL_BASE = "https://v3.football.api-sports.io"
 
@@ -45,14 +44,14 @@ def _transform_scorer(raw: dict) -> dict:
     stats = raw.get("statistics", [{}])[0]
 
     return {
-        "id":            player.get("id"),
-        "name":          player.get("name"),
-        "avatar_url":    player.get("photo"),
-        "team":          stats.get("team", {}).get("name"),
-        "team_logo":     stats.get("team", {}).get("logo"),
-        "league":        stats.get("league", {}).get("name"),
-        "goals":         stats.get("goals", {}).get("total", 0),
-        "assists":       stats.get("goals", {}).get("assists", 0),
+        "id":             player.get("id"),
+        "name":           player.get("name"),
+        "avatar_url":     player.get("photo"),
+        "team":           stats.get("team", {}).get("name"),
+        "team_logo":      stats.get("team", {}).get("logo"),
+        "league":         stats.get("league", {}).get("name"),
+        "goals":          stats.get("goals", {}).get("total", 0),
+        "assists":        stats.get("goals", {}).get("assists", 0),
         "matches_played": stats.get("games", {}).get("appearences", 0),
     }
 
