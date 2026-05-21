@@ -45,8 +45,8 @@ app = FastAPI(
 
 
 #app.add_middleware(
-#    CORSMiddleware,
-#    allow_origins=["http://localhost:5173"],  # puerto de Vite
+#    CORSMiddleware
+#    # allow_origins=["http://localhost:5173"],  # puerto de Vite
 #    allow_methods=["*"],
 #    allow_headers=["*"],
 #)
@@ -55,7 +55,7 @@ origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173, https://fifa-2026
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],#origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
