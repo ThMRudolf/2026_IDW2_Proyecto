@@ -71,6 +71,7 @@ Ejemplo de variables de entorno:
 ALLOWED_ORIGINS=http://localhost:5173
 API_FOOTBALL_KEY=tu_api_key
 
+
 Variable ALLOWED_ORIGINS
 
 Esta variable indica qué frontend tiene permiso de llamar al backend desde el navegador.
